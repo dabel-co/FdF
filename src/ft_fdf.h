@@ -12,13 +12,13 @@
 
 #ifndef FT_FDF_H
 # define FT_FDF_H
-# include "./libft/libft.h"
+# include "../Libft/src/libft.h"
 # include "./GNL/get_next_line.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
 # include <fcntl.h>
-# include <mlx.h>
+# include "../mlx/mlx.h"
 
 typedef struct s_pixel
 {

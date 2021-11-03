@@ -13,7 +13,7 @@
 NAME = fdf
 FLAGS = -Wall -Werror -Wextra -D BUFFER_SIZE=1000
 CC = cc
-LINK = -lmlx -framework OpenGL -framework AppKit
+LINK = -Lmlx -lmlx -framework OpenGL -framework AppKit
 FILES =	fdf \
 		count \
 		utils \
@@ -26,14 +26,20 @@ GNL = ./src/GNL/get_next_line.c ./src/GNL/get_next_line_utils.c
 
 all: $(NAME)
 
-$(NAME) :	check_libft
-	@$(CC) $(FLAGS) $(LINK) $(C) $(GNL) ./src/libft/libft.a -o $(NAME)
+$(NAME) : check_libft check_mlx
+	@$(CC) $(FLAGS) $(LINK) $(C) $(GNL) ./Libft/libft.a -o $(NAME)
+	@mv mlx/libmlx.dylib libmlx.dylib
 check_libft :
-	@make -C ./src/libft
+	@if test -d Libft; then ( cd Libft ; git pull ) ; else git clone https://github.com/dabel-co/Libft.git; fi
+	@make extra -C ./Libft
+check_mlx :
+	@make -C ./mlx	
 clean:
 	rm -f $(NAME)
 fclean: clean
-	make fclean -C ./src/libft
+	make fclean -C ./Libft
+	make clean -C ./mlx
+	rm -f libmlx.dylib
 re: clean all
 
 .PHONY : all clean fclean re check_libft
